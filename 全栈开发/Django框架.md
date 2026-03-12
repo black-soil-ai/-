@@ -41,3 +41,24 @@
   - 处理响应行和响应头
   - 处理不同访问路径反馈不同内容问题
 - 连接MySQL获取数据库数据
+ 
+```bash
+import socket
+#1.创建服务器
+s = socket.socket()
+s.bind('127.0.0.1',8001)
+s.listen(5)
+while Ture:
+  conn,addr=s.accept()
+  #2.接受客户端请求
+  data = conn.recv(1024)
+  # print(data)
+  #3.给客户端返回数据
+  #处理响应行和响应头
+  conn.send(b'HTTP/1.1 200 OK \r\n')#拼接响应的三行，让浏览器帮我们补充
+  conn.send(b'Content-Type: text/html; charset=utf-8 \r\n\r\n')
+  conn.send(b'holle world!')#只能以二进制的方式传给浏览器
+#关闭连接
+conn.close()
+
+```
