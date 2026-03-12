@@ -44,10 +44,29 @@
  
 ```bash
 import socket
+import pymysql
 #1.创建服务器
 s = socket.socket()
 s.bind('127.0.0.1',8001)
 s.listen(5)
+
+def get_data():
+  c = pymysql.connect(
+      host='127.0.0.1',
+      port=3306,
+      user='root',
+      password='0201'
+      database='python14'
+  )
+  #返回的格式是字典
+  cur = c.cursor(pymysql.sursors.DictCursor)
+  #构建sql
+  sql = 'select * from emp'
+  cur.execute(sql)
+  #列表的形式每个元素都是列表
+  data = cur.fetvhall()
+  return data
+
 while Ture:
   conn,addr=s.accept()
   #2.接受客户端请求
@@ -62,3 +81,15 @@ while Ture:
 conn.close()
 
 ```
+#### 4.框架介绍
+- 写好的工具库
+- web框架（简化web应用程序开发的工具集，封装了http请求和响应处理，模板渲染等功能）
+  - 有现成的模块
+  - 可以安装插件或者中间件拓展功能
+- Django核心特征(ORM、Admin 后台、内置安全防护)
+  - 全栈能力：内置 ORM、模板引擎、用户认证、管理后台
+  - 安全性：防止 SQL 注入、XSS 攻击、CSRF 攻击
+  - 支持插件（如 django-rest-framework 构建 API）。
+  - 丰富的第三方库（如 django-allauth 处理社交登录）
+#### 5.项目设计模式
+- MVC设计模式（分工、负责分离）
